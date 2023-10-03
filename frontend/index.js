@@ -1,16 +1,16 @@
 let XML;
 
 const readXML = () => {
-  fetch("../sample.xml")
+  fetch("http://localhost:3001/xml")
     .then((res) => {
-      return res.text();
+      return res.json();
     })
-    .then((String) => {
-      XML = new DOMParser().parseFromString(String, "text/xml");
-      const additiveData = convertToAdditiveData(XML);
-      const data = convertToData(XML);
+    .then((data) => {
+      // XML = new DOMParser().parseFromString(String, "text/xml");
+      // const additiveData = convertToAdditiveData(XML);
+      // const data = convertToData(XML);
       graphify(data, "sdat");
-      graphify(additiveData, "additiveSdat");
+      // graphify(additiveData, "additiveSdat");
     });
 };
 
