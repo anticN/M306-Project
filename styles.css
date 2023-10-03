@@ -6,11 +6,14 @@ ul {
     width: 100%;
     top: 0;
     overflow: hidden;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: large;
 }
 
 li {
     display: block;
     padding: 8px;
+    padding-right: 70px;
 }
 
 body {
@@ -39,6 +42,7 @@ img {
 
 .item3 {
     grid-area: main;
+    background-color: white;
 }
 
 .grid-container {
@@ -49,4 +53,26 @@ img {
         'main';
     gap: 10px;
     padding: 30px;
+}
+
+.tab {
+    overflow: hidden;
+  }
+
+.tab button {
+    background-color: #d6c5e3;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+  }
+  
+.tab button.active {
+    background-color: white;
+  }
+
+.tab button :hover {
+    background-color: beige;
 }
