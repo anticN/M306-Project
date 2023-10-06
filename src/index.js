@@ -1,19 +1,19 @@
 const getSDAT = () => {
-    fetch("http://localhost:6969/xml")
-      .then((res) => {
-        return res.json();
-      })
-      .then((data) => {
-        console.log(data);
-        graphify(data, "graphsdat");
-        hideLoaderv();
-      })
-      .catch((err) => {
-        showError(
-          "Falsche Daten wurden verwendet, bitte löschen Sie diese und laden Sie die korrekten Daten hoch."
-        );
-        hideLoaderv()
-      });
+  fetch("http://localhost:6969/xml")
+    .then((res) => {
+      return res.json();
+    })
+    .then((data) => {
+      console.log(data);
+      graphify(data, "graphsdat");
+      hideLoaderv();
+    })
+    .catch((err) => {
+      showError(
+        "Falsche Daten wurden verwendet, bitte löschen Sie diese und laden Sie die korrekten Daten hoch."
+      );
+      hideLoaderv();
+    });
 };
 
 const getESL = () => {
@@ -45,6 +45,35 @@ const exportJSON = () => {
     let data735 = prepareCSV(esl, "735");
     const json = convertJSON(data742, data735);
     saveAs(json, "data.json");
+  } catch (err) {
+    showError(
+      "Der Export kann nur mit einem dargestellten Zählerstand-Graphen durchgeführt werden."
+    );
+  }
+};
+
+const postJSON = () => {
+  try {
+    const esl = document.getElementById("graphzählerstand");
+
+    let data742 = prepareCSV(esl, "742");
+    let data735 = prepareCSV(esl, "735");
+    const json = convertJSON(data742, data735);
+    fetch("https://api.npoint.io/4c234b473bb6ab6d7d80", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(json), // Convert the array to JSON format
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        console.log("Response from server:", data);
+        alert('Daten wurden erfolgreich hochgeladen.')
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
   } catch (err) {
     showError(
       "Der Export kann nur mit einem dargestellten Zählerstand-Graphen durchgeführt werden."

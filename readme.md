@@ -8,6 +8,7 @@ Unter dem Reiter "Verbrauch" kann man den Bezug wie die Einspeisung für jeden T
 
 ### Exportierung von Daten
 Nach der Generierung vom Zählerstand, kann man diese Daten als CSV sowie als JSON exportieren, in dem Format, wie angegeben.
+Zudem ist es möglich, diese Daten an einem externem Server weiterzuleiten
 
 ### Upload von Daten
 Bei "Upload", kann man eigene, neue XML Daten hochladen, welche automatisch als SDAT oder ESL erkannt wird.
