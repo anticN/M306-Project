@@ -1,20 +1,34 @@
-// ChatGPT
-const convertToCSV = (XML) => {
-  const observations = XML.querySelectorAll("Volume");
-  const startDateTime = XML.querySelector("StartDateTime").textContent;
 
-  // CSV-Header erstellen
-  let csvData = "DateTime,Volume\n";
+function loopCSV(arrData, id, csvContent) {
+  arrData.forEach((row) => {
+    let dateObject = new Date(row.timestamp);
+    // Unix-Timestamp erhalten (in Millisekunden)
+    const unixTimestampMilliseconds = dateObject.getTime();
 
-  observations.forEach((observation, index) => {
-    const sequence = observation.parentElement.querySelector("Sequence").textContent;
-    const volume = observation.textContent;
-    const dateTime = new Date(startDateTime);
-    dateTime.setMinutes(dateTime.getMinutes() + (parseInt(sequence) - 1) * 15);
-
-    const formattedDateTime = dateTime.toISOString().replace("Z", "");
-    csvData += `${formattedDateTime},${volume}\n`;
-
-    console.log(csvData);
+    // Unix-Timestamp in Sekunden umwandeln (durch 1000 teilen)
+    const unixTimestampSeconds = Math.floor(unixTimestampMilliseconds / 1000);
+    if (id == "742") {
+      csvContent += `${unixTimestampSeconds},${row.valueBezug}\n`;
+    } else if (id == "735") {
+      csvContent += `${unixTimestampSeconds},${row.valueEinspesung}\n`;
+    }
   });
+  return csvContent;
+}
+
+function prepareCSV(graph, id) {
+  const data = graph.data[0].x.map((timestamp, index) => {
+    if (id == "742") {
+      return {
+        timestamp: timestamp,
+        valueBezug: graph.data[0].y[index],
+      };
+    } else if (id == "735") {
+      return {
+        timestamp: timestamp,
+        valueEinspesung: graph.data[1].y[index],
+      };
+    }
+  });
+  return data;
 }
