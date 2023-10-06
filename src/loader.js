@@ -1,3 +1,8 @@
+/**
+ * @fileoverview Loader functions for the application.
+ *
+ */
+
 function showLoaderz() {
   let x = document.getElementById("loaderz");
   if (x.style.display == "flex") {
