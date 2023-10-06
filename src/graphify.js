@@ -1,13 +1,10 @@
-const graphify = (data, graphID) => {
-  
-  // X- und Y-Achsendaten extrahieren
-  const xData = data.map((entry) => new Date(entry.timestamp));
-  const yData = data.map((entry) => entry.valueBezug);
+const graphify = (antwort, graphID) => {
+  const xData = antwort.map((entry) => new Date(entry.timestamp));
+  let yDataBezug = antwort.map((entry) => parseFloat(entry.valueBezug));
+  let yDataEinspesung = antwort.map((entry) => parseFloat(entry.valueEinspesung));
 
-  //const xDataProduce = data.map((entry) => new Date(entry.timestamp));
-  const yDataProduce = data.map((entry) => entry.valueEinspesung);
 
-  let selectorOptions = {
+  let selectorButtons = {
     buttons: [{
         step: 'month',
         stepmode: 'backward',
@@ -33,39 +30,33 @@ const graphify = (data, graphID) => {
     }],
   };
 
-  // Layout-Einstellungen für den Graphen
+ 
+
+  const sellData = {
+    x: xData,
+    y: yDataBezug,
+    type: "scatter",
+    name: "Bezug von Strom",
+  };
+  const buyData = {
+    x: xData,
+    y: yDataEinspesung,
+    type: "scatter",
+    name: "Einspeisung von Strom",
+  };
+  var data = [sellData, buyData];
   const layout = {
+    title: "Dynamisch aktualisierte Daten",
     xaxis: {
-      type: "date", // X-Achse als Zeitachse
+      type: "date",
       title: "Zeit",
-      rangeselector: selectorOptions,
+      rangeselector: selectorButtons,
       rangeslider: {}, // Range-Slider unter dem Graphen
     },
     yaxis: {
       title: "Volumes",
     },
-    colorway: ["blue", "orange"],
   };
 
-  // Trace für die Daten erstellen
-  const trace = {
-    x: xData,
-    y: yData,
-    type: "scatter", // Linien-Diagramm
-    name: "Produktion",
-  };
-
-  const traceProduce = {
-    x: xData,
-    y: yDataProduce,
-    type: "scatter", // Linien-Diagramm
-    name: "Verbrauch",
-  };
-
-  // Daten-Array für Plotly erstellen
-  const plotData = [traceProduce, trace];
-  console.log(plotData);
-
-  // Plotly-Graph erstellen
-  Plotly.newPlot("graph"+graphID, plotData, layout, {displayModeBar: false});
-};
+  Plotly.newPlot(graphID, data, layout, {displayModeBar: false});
+}

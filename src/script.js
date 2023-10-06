@@ -57,7 +57,5 @@ document.getElementById('delete-files').addEventListener('click', () => {
     .catch(error => console.error('Error sending delete request:', error));
 }
 
-
-
 const fileInput = document.getElementById('file-input');
 fileInput.addEventListener('change', handleFileUpload);

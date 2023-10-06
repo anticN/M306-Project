@@ -1,20 +1,41 @@
-let XML;
-
-const readXML = () => {
-  fetch("http://localhost:6969/xml")
-    .then((res) => {
-      return res.json();
-    })
-    .then((data) => {
-      console.log(data);
-      graphify(data, "sdat");
-      hideLoaderv();
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+const getSDAT = () => {
+    fetch("http://localhost:6969/xml")
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        console.log(data);
+        graphify(data, "graphsdat");
+        hideLoaderv();
+      })
+      .catch((err) => {
+        showError(
+          "Falsche Daten wurden verwendet, bitte löschen Sie diese und laden Sie die korrekten Daten hoch."
+        );
+        hideLoaderv()
+      });
 };
 
+const getESL = () => {
+  fetch("http://localhost:6969/esl")
+    .then((res) => {
+      return res.text();
+    })
+    .then((data) => {
+      return JSON.parse(data);
+    })
+    .then((antwort) => {
+      console.log(antwort);
+      graphify(antwort, "graphzählerstand");
+      hideLoaderz();
+    })
+    .catch((err) => {
+      showError(
+        "Falsche Daten wurden verwendet, bitte löschen Sie diese und laden Sie die korrekten Daten hoch."
+      );
+      hideLoaderz();
+    });
+};
 
 const exportJSON = () => {
   try {
@@ -24,14 +45,12 @@ const exportJSON = () => {
     let data735 = prepareCSV(esl, "735");
     const json = convertJSON(data742, data735);
     saveAs(json, "data.json");
-
   } catch (err) {
     showError(
       "Der Export kann nur mit einem dargestellten Zählerstand-Graphen durchgeführt werden."
     );
   }
 };
-
 
 function exportCSV() {
   try {
@@ -68,68 +87,3 @@ function showError(errorMessage) {
     errorElement.innerText = ""; // Zurücksetzen des Texts
   }, 3000);
 }
-
-function showLoaderz() {
-  let x = document.getElementById("loaderz");
-  if (x.style.display == "flex") {
-    x.style.display = "none";
-  } else {
-    x.style.display = "flex";
-  }
-}
-
-function showLoaderv() {
-  let x = document.getElementById("loaderv");
-  if (x.style.display == "flex") {
-    x.style.display = "none";
-  } else {
-    x.style.display = "flex";
-  }
-}
-
-function hideLoaderz() {
-  let x = document.getElementById("loaderz");
-  if (x.style.display == "none") {
-    x.style.display = "flex";
-  } else {
-    x.style.display = "none";
-  }
-}
-
-function hideLoaderv() {
-  let x = document.getElementById("loaderv");
-  if (x.style.display == "none") {
-    x.style.display = "flex";
-  } else {
-    x.style.display = "none";
-  }
-}
-
-const renderAdditive = () => {
-  fetch("http://localhost:6969/esl")
-    .then((res) => {
-      return res.text();
-    })
-    .then((data) => {
-      return JSON.parse(data);
-    })
-    .then((antwort) => {
-      console.log(antwort);
-      graphifyESL(antwort);
-      hideLoaderz();
-    });
-  const antwort = [
-    {
-      timestamp: "2019-03-13T23:00:00.000",
-      valueSell: "1",
-      valueBuy: "0.4",
-    },
-    {
-      timestamp: "2019-03-14T23:00:00.000",
-      valueSell: "3",
-      valueBuy: "2",
-    },
-  ];
-
-  console.log(antwort);
-};

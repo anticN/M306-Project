@@ -1,4 +1,4 @@
-
+// in javascript, how can i make the user downlaod an array as a json?
 const saveAs = (array, filename = "data.json") => {
   // 1. Convert array to JSON-formatted string
   const jsonString = JSON.stringify(array, null, 2);

@@ -7,36 +7,12 @@
     <link rel="stylesheet" href="styles.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="/src/index.js"></script>
-    <script src="/src/convertToCSV.js"></script>
-    <script src="/src/convertToAdditiveData.js"></script>
-    <script src="/src/convertToData.js"></script>
     <script src="/src/graphify.js"></script>
-    <script src="/src/graphifyESL.js"></script>
+    <script src="/src/convertToCSV.js"></script>
     <script src="/src/convertToJSON.js"></script>
     <script src="/src/download.js"></script>
+    <script src="/src/loader.js"></script>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-    <script>
-    function openGraph(evt, graphName) {
-
-        let i, tabcontent, tabutton;
-
-
-        tabcontent = document.getElementsByClassName("tabcontent");
-        for (i = 0; i < tabcontent.length; i++) {
-            tabcontent[i].style.display = "none";
-        }
-
-
-        tabutton = document.getElementsByClassName("tabutton");
-        for (i = 0; i < tabutton.length; i++) {
-            tabutton[i].className = tabutton[i].className.replace(" active", "");
-        }
-
-
-        document.getElementById(graphName).style.display = "block";
-        evt.currentTarget.className += " active";
-        }
-    </script>
 </head>
 <body style="background-color: #d6c5e3;">
     <div class="nav">
@@ -58,7 +34,7 @@
         </div>
         <div id="zählerstände" class="tabcontent">
             <h1>Zählerstanddiagramm</h1>
-            <button class="btn btn-light" onclick="renderAdditive(); showLoaderz()">Zählerstand anzeigen</button>
+            <button class="btn btn-light" onclick="getESL(); showLoaderz()">Zählerstand anzeigen</button>
             <div class="loading" id="loaderz">
                 <svg height="48px" width="64px">
                     <polyline id="back" points="0.157 23.954, 14 23.954, 21.843 48, 43 0, 50 24, 64 24"></polyline>
@@ -69,7 +45,7 @@
         </div>
         <div id="verbrauch" class="tabcontent">
             <h1>Verbrauchsdiagramm</h1>
-            <button class="btn btn-light" id="getXML" onclick="readXML(); showLoaderv()">XML lesen</button>
+            <button class="btn btn-light" id="getXML" onclick="getSDAT(); showLoaderv()">XML lesen</button>
             <div class="loading" id="loaderv">
                 <svg height="48px" width="64px">
                     <polyline id="back" points="0.157 23.954, 14 23.954, 21.843 48, 43 0, 50 24, 64 24"></polyline>
