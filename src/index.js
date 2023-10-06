@@ -1,3 +1,8 @@
+/**
+ * fetch all SDAT data from the server and plot the graph and plot the graph
+ *
+ * @returns {void}
+ */
 const getSDAT = () => {
   fetch("http://localhost:6969/xml")
     .then((res) => {
@@ -16,6 +21,11 @@ const getSDAT = () => {
     });
 };
 
+/**
+ * fetch all ESL data from the server and plot the graph and plot the graph
+ *
+ * @returns {void}
+ */
 const getESL = () => {
   fetch("http://localhost:6969/esl")
     .then((res) => {
@@ -37,6 +47,11 @@ const getESL = () => {
     });
 };
 
+/**
+ * export the ESL data as JSON and save it to the user's computer
+ *
+ * @returns {void}
+ */
 const exportJSON = () => {
   try {
     const esl = document.getElementById("graphzählerstand");
@@ -52,6 +67,10 @@ const exportJSON = () => {
   }
 };
 
+/**
+ * export the ESL data as JSON and save it with a post request
+ * @returns {void}
+ */
 const postJSON = () => {
   try {
     const esl = document.getElementById("graphzählerstand");
@@ -81,6 +100,10 @@ const postJSON = () => {
   }
 };
 
+/**
+ * export the ESL data as CSV and save it to the user's computer
+ * @returns {void}
+ */
 function exportCSV() {
   try {
     const esl = document.getElementById("graphzählerstand");
@@ -105,6 +128,12 @@ function exportCSV() {
   }
 }
 
+/**
+ * Show an error message of chioce.
+ *
+ * @param {string} errorMessage - message to display to the user in red
+ * @returns {void}
+ */
 function showError(errorMessage) {
   const errorElement = document.getElementById("error");
   errorElement.innerText = errorMessage;

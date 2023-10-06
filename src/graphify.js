@@ -1,7 +1,14 @@
-const graphify = (antwort, graphID) => {
-  const xData = antwort.map((entry) => new Date(entry.timestamp));
-  let yDataBezug = antwort.map((entry) => parseFloat(entry.valueBezug));
-  let yDataEinspesung = antwort.map((entry) => parseFloat(entry.valueEinspesung));
+/**
+ * Plot the graph with data.
+ *
+ * @param {Array} data - Array of objects with data. [{timestamp: "2020-12-01T00:00:00.000Z", valueBezug: "0.0", valueEinspesung: "0.0"}, ...}]
+ * @param {string} graphID - GraphID to plot the specific graph
+ * @returns {void}
+ */
+const graphify = (data, graphID) => {
+  const xData = data.map((entry) => new Date(entry.timestamp));
+  let yDataBezug = data.map((entry) => parseFloat(entry.valueBezug));
+  let yDataEinspesung = data.map((entry) => parseFloat(entry.valueEinspesung));
 
 
   let selectorButtons = {
